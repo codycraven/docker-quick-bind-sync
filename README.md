@@ -55,6 +55,37 @@ When no commands are passed in the `docker run` command, the following options a
 * -copyonconflict
 * -prefer newer
 
+## Docker Compose example
+
+Using the same example as above, this can be formatted in docker-compose like so:
+
+```yml
+version: "3.2"
+
+services:
+  php:
+    image: php:7.2-apache
+    volumes:
+      - type: volume
+        source: quick-sync-volume
+        target: /var/www/html
+
+  php_sync:
+    image: codycraven/quick-bind-sync:latest
+    depends_on:
+      - php
+    volumes:
+      - type: bind
+        source: .
+        target: /host
+      - type: volume
+        source: quick-sync-volume
+        target: /volume
+
+volumes:
+  quick-sync-volume:
+```
+
 ## Build image
 
 ```bash
