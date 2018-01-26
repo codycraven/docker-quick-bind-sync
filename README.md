@@ -33,6 +33,28 @@ This project circumvents the issue by:
 
 Since the Docker container will not be reading files from the host's bind mount, the Docker container will be able to execute quickly - while maintaining a bidirectional file sync.
 
+## Sync options
+
+Under the hood, the quick-bind-sync container is simply using [Unison](https://www.cis.upenn.edu/~bcpierce/unison/) to maintain a bidirectional sync. You may override the commands built into the Docker image like so:
+
+```bash
+docker run --rm \
+-v quick-sync-volume:/volume \
+-v `pwd`:/host \
+codycraven/quick-bind-sync:latest \
+unison /host /volume [options]
+```
+
+A list of options are available in the [Unison manual](https://www.cis.upenn.edu/~bcpierce/unison/download/releases/stable/unison-manual.html#prefs).
+
+When no commands are passed in the `docker run` command, the following options are used:
+
+* -auto
+* -batch
+* -repeat watch
+* -copyonconflict
+* -prefer newer
+
 ## Build image
 
 ```bash
