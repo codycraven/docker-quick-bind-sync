@@ -32,3 +32,9 @@ This project circumvents the issue by:
 1. wait for the container to synchronize your bind mount with your volume.
 
 Since the Docker container will not be reading files from the host's bind mount, the Docker container will be able to execute quickly - while maintaining a bidirectional file sync.
+
+## Build image
+
+```bash
+docker build -t codycraven/quick-bind-sync:latest .
+```
