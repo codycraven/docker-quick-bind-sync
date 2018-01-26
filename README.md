@@ -91,3 +91,11 @@ volumes:
 ```bash
 docker build -t codycraven/quick-bind-sync:latest .
 ```
+
+## Alternatives
+
+Docker hasn't yet provided a solution for bind mounts that are satisfactory for very large projects (such as those the size of Drupal 8). There are very many alternatives that I've attempted and come across, however most are only one-way syncs and all have flaws of some sort that I haven't been satisfied with.
+
+The approach this project takes is inspired by [docker-sync](https://docker-sync.io/) with the native_osx strategy. However my team (and many other users) continually ran into problems where docker-sync would stop synchronizing, requiring tearing down the entire container stack, running a `docker-sync clean`, and then bringing the whole stack back up (not a fun process). Not to mention the installation process of docker-sync itself.
+
+By making the synchronization container easily accessible, this project should make it easier to fix synchronization problems without tearing down your containers. Since containers are meant to be ephermal, you should be able to remove only the synchronization container and start a new instance without affecting the rest of your stack.
